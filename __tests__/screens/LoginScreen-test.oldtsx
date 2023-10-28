@@ -1,0 +1,26 @@
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import LoginScreen from './LoginScreen';
+
+describe('LoginScreen', () => {
+  it('should render the login screen', () => {
+    const { getByTestId } = render(<LoginScreen />);
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+    const loginButton = getByTestId('login-button');
+
+    expect(emailInput).toBeDefined();
+    expect(passwordInput).toBeDefined();
+    expect(loginButton).toBeDefined();
+  });
+
+  it('should call the onSubmit function when the login button is pressed', () => {
+    const onSubmit = jest.fn();
+    const { getByTestId } = render(<LoginScreen onSubmit={onSubmit} />);
+    const loginButton = getByTestId('login-button');
+
+    fireEvent.press(loginButton);
+
+    expect(onSubmit).toHaveBeenCalled();
+  });
+});
